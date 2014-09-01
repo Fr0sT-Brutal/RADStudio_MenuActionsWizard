@@ -183,7 +183,8 @@ var
   act: TContainedAction;
   pActInf: PActionInfo;
 begin
-log('TWizard.Startup');
+  Log('TWizard.Startup');
+
   // fill actions list
   for act in INSrv.ActionList do
   begin
@@ -219,11 +220,15 @@ end;
 procedure TWizard.Cleanup;
 var i: Integer;
 begin
-log('TWizard.Cleanup');
+  Log('TWizard.Cleanup');
+
   SaveSettings;
   for i := 0 to FActions.Count - 1 do
     FreeMem(PActionInfo(FActions[i]));
   FActions.Clear;
+
+  // remove our custom Options page
+  FEnvOpts.UnregisterAddInOptions(Self);
 end;
 
 // Change shortcuts of actions
